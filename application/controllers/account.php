@@ -163,7 +163,7 @@ class account extends CI_controller
 		$profile_btn = div($profile_btn, $attribute['pull_left']);
 	
 		$signout_btn = anchor('logout', 'Signout', $attribute['btn_flat']);
-		$signout_btn = div($profile_btn, $attribute['pull_right']);
+		$signout_btn = div($signout_btn, $attribute['pull_right']);
 
 		$user_footer = li($profile_btn.$signout_btn, $attribute['user_footer']);
 
