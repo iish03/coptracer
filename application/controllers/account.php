@@ -4,7 +4,7 @@
  * Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is: ______________________
- * The Initial Developer of the Original Code is Krishia Valencia.
+ * The Initial Developer of the Original Code is CodeIgniter.
  * Portions created by KBVCodes are Copyright (C) KBVCodes.
  * All Rights Reserved.
  *
@@ -15,6 +15,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 //INCLUDE CONTROLLERS
 include_once('common.php');
 include_once('dashboard.php');
+include_once('sidebar.php');
 include_once('users.php');
 
 class account extends CI_controller
@@ -180,12 +181,12 @@ class account extends CI_controller
 	 * @return data
 	 * --------------------------------------------
 	 */
-	public function dashboard($page)
+	public function dashboard($page, $sidebar)
 	{
 		$dashboard = new dashboard;
 		$header = $this->header();
 
-		return $dashboard->view($page,$header);
+		return $dashboard->view($page,$header,$sidebar);
 	}
 
 
@@ -210,12 +211,18 @@ class account extends CI_controller
 	{
 		self::checkIfPageExist($page);
 		$common = new common;
+		$sidebar = new sidebar;
+
+		if( ! $common->check_login() ) redirect('home', 'refresh');
+
 		$common->loadLanguage();
 		$common->display_header($page);
+		$sidebar = $sidebar->view_sidebar();
 
 		switch ($page) {
-			case 'dashboard' : $this->dashboard($page);		break;
-			default: $this->dashboard($page); break;
+			case 'dashboard' : $this->dashboard($page, $sidebar);		break;
+			case 'events'    : $this->events($page, $sidebar);		break;
+			default: $this->dashboard($page, $sidebar); break;
 		}
 
 		$common->display_footer();

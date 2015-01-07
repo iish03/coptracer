@@ -4,7 +4,7 @@
  * Public License Version 1.0
  * ("License"); You may not use this file except in compliance with the License
  * The Original Code is: ______________________
- * The Initial Developer of the Original Code is Krishia Valencia.
+ * The Initial Developer of the Original Code is CodeIgniter.
  * Portions created by KBVCodes are Copyright (C) KBVCodes.
  * All Rights Reserved.
  *
@@ -21,12 +21,10 @@ class dashboard extends CI_controller
 		$this->load->library('form_validation');
 	}
 
-	
-
-	public function view($page, $header)
+	public function view($page, $header, $sidebar)
 	{
 		$data['header']  = $header;
-
+		$data['sidebar'] = $sidebar;
 		return $this->load->view('account/'.$page, $data);
 	}
 }
