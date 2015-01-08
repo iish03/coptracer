@@ -207,5 +207,18 @@ class common extends CI_controller
 			return FALSE;
 		}
 	}
+
+	/**
+	 * CREATES ICON
+	 * @param Array, $icon
+	 * @return String, <i>
+	 * --------------------------------------------------------
+	 */
+	static function create_icon($icon)
+	{
+		if( ! is_array($icon) ){ return ''; }
+
+		return i('&nbsp', $icon);
+	}
 }
 ?>

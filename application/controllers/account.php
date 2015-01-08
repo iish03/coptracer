@@ -16,6 +16,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 include_once('common.php');
 include_once('dashboard.php');
 include_once('sidebar.php');
+include_once('status_box.php');
 include_once('users.php');
 
 class account extends CI_controller
@@ -176,6 +177,40 @@ class account extends CI_controller
 		return $list;
 	}
 
+	static function bread_crumbs($page = '')
+	{
+		$attribute = array(
+				'active'=> array('class'=>'active'),
+				'icon'  => array('class'=>'fa fa-dashboard'),
+				'ol'    => array('class'=>'breadcrumb'),
+			);
+
+		$home   = common::create_icon($attribute['icon']);
+		$home   = anchor('account/dashboard', $home. 'Home');
+		$current= li($page);
+
+		$li = li($home, $attribute['active']);
+		$li.= $current;
+
+		return create_tag('ol', $li, $attribute['ol']);
+	}
+
+	/**
+	 * DISPLAY THE PAGE CONTENT HEADER AND
+	 * BREAD CRUMBS
+	 * @return data
+	 * --------------------------------------------
+	 */
+	static function content_header($page = '')
+	{
+		$title        = heading($page.create_tag('small','Control panel'), '1');
+		$bread_crumbs = self::bread_crumbs($page);
+
+		return create_tag(
+							'section', $title.$bread_crumbs, array('class'=>'content-header')
+						);
+	}
+
 	/**
 	 * DISPLAY INDEX VIEW PAGE
 	 * @return data
@@ -184,11 +219,16 @@ class account extends CI_controller
 	public function dashboard($page, $sidebar)
 	{
 		$dashboard = new dashboard;
-		$header = $this->header();
+		$header  = $this->header();
+		$c_header= self::content_header(ucfirst($page));
 
-		return $dashboard->view($page,$header,$sidebar);
+		return $dashboard->view($page,$header,$sidebar, $c_header);
 	}
 
+	public function events($page, $sidebar)
+	{
+
+	}
 
 	/**
 	 * DESTROYS LOG IN SESSION DATA
@@ -220,9 +260,9 @@ class account extends CI_controller
 		$sidebar = $sidebar->view_sidebar();
 
 		switch ($page) {
-			case 'dashboard' : $this->dashboard($page, $sidebar);		break;
+			case 'dashboard' : $this->dashboard($page, $sidebar);	break;
 			case 'events'    : $this->events($page, $sidebar);		break;
-			default: $this->dashboard($page, $sidebar); break;
+			default: $this->dashboard($page, $sidebar); 					break;
 		}
 
 		$common->display_footer();

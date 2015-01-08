@@ -18,6 +18,14 @@ class Users_model extends CI_Model {
 		$this->load->database();
 	}
 
+	public function get_no_of_user()
+	{
+		$this->db->where('status', 'Active');
+		$this->db->where('is_admin', 'off');
+		$this->db->from('cop_users');
+		return $this->db->count_all_results();
+	}
+
 	public function get_user()
 	{
 		$query = $this->db->get('cop_users');

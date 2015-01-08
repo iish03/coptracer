@@ -195,11 +195,22 @@ class users extends CI_Controller
 	{
 		if( $src['src'] == '' ){
 			( $gender == 'male' )?
-				$src['src'] = 'assets/img/avatar5.png' : $src['src'] = 'img/avatar3.png';
+				$src['src'] = 'assets/img/avatar5.png'
+			: $src['src'] = 'assets/img/avatar3.png';
 
 		}
 
 		return img($src);
+	}
+
+	/**
+	 * GET'S THE NO. OF ACTIVE USERS THAT IS ACTIVE
+	 * @return img
+	 * --------------------------------------------
+	 */
+	public function get_no_of_user()
+	{
+		return $this->users_model->get_no_of_user();
 	}
 }
 ?>

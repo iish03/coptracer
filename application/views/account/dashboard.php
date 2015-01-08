@@ -3,6 +3,22 @@
 	<!-- Left side column. contains the logo and sidebar -->
 	<aside class="left-side sidebar-offcanvas">
 		<!-- sidebar: style can be found in sidebar.less -->
-			<?=$sidebar ?>
+		<?=$sidebar ?>
+	</aside>
+
+	<!-- Right side column. Contains the navbar and content of the page -->
+	<aside class="right-side">
+		<!-- Content Header (Page header) -->
+		<?=$content_header ?>
+		<!-- Main content -->
+		<section class="content">
+			<!-- Small boxes (Stat box) -->
+			<div class="row">
+				<?=$stat_box ?>
+			</div>
+		</section>
 	</aside>
 </div>
+
+
+
