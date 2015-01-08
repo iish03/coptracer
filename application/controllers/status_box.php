@@ -20,6 +20,12 @@ class status_box extends CI_controller
 		parent::__construct();
 	}
 
+	/**
+	 * AVAILABLE COLORS OF STATUS BOX
+	 * @param String, $color
+	 * @return Array, $available_colors
+	 * --------------------------------------------
+	 */
 	public function get_available_colors($color)
 	{
 		$avaialable_colors = array(
@@ -40,6 +46,12 @@ class status_box extends CI_controller
 		}
 	}
 
+	/**
+	 * AVAILABLE ICONS OF STATUS BOX
+	 * @param String, $color
+	 * @return Array, $avaialable_icons
+	 * --------------------------------------------
+	 */
 	public function get_available_icons($icon)
 	{
 		$avaialable_icons = array(
@@ -60,6 +72,12 @@ class status_box extends CI_controller
 		}
 	}
 
+	/**
+	 * GET DESCRIPTION OF STATUS BOX
+	 * @param Array, $details
+	 * @return String, <div>
+	 * --------------------------------------------
+	 */
 	public function get_inner($details)
 	{
 		$inner = heading($details['data'], '3');
@@ -68,6 +86,12 @@ class status_box extends CI_controller
 		return div($inner, array('class'=>'inner'));
 	}
 
+	/**
+	 * GET ICON OF STATUS BOX
+	 * @param Array, $icon_attr
+	 * @return String, <div>
+	 * --------------------------------------------
+	 */
 	public function get_icon($icon_attr)
 	{
 		$icon = common::create_icon($icon_attr);
@@ -75,6 +99,11 @@ class status_box extends CI_controller
 		return div($icon, array('class'=>'icon'));
 	}
 
+	/**
+	 * GET FOOTER OF STATUS BOX
+	 * @return String, <a>
+	 * --------------------------------------------
+	 */
 	public function get_stat_footer()
 	{
 		$attribute = array(
@@ -87,6 +116,11 @@ class status_box extends CI_controller
 		return anchor('', 'More info '.$icon, $attribute['footer']);
 	}
 
+	/**
+	 * DISPLAY OF STATUS BOX
+	 * @return String, <object>
+	 * --------------------------------------------
+	 */
 	public function view($details)
 	{
 		if( !is_array($details) ){ return ''; }

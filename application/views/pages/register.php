@@ -4,16 +4,16 @@
 	<?php echo form_open('register') ?>
 		<div class="body bg-gray">
 			<div class="form-group">
+				<input type="text" name="username" class="form-control" placeholder="Student No" value="<?php echo set_value('username'); ?>" maxlength="50"/>
+				<?=form_error('username', '<p class="error">', '</p>') ?>
+			</div>
+			<div class="form-group">
 				<input type="text" name="firstname" class="form-control" placeholder="First name" value="<?php echo set_value('firstname'); ?>" maxlength="50"/>
 				<?=form_error('firstname', '<p class="error">', '</p>') ?>
 			</div>
 			<div class="form-group">
 				<input type="text" name="lastname" class="form-control" placeholder="Last name" value="<?php echo set_value('lastname'); ?>" maxlength="50"/>
 				<?=form_error('lastname', '<p class="error">', '</p>') ?>
-			</div>
-			<div class="form-group">
-				<input type="text" name="username" class="form-control" placeholder="Student No" value="<?php echo set_value('username'); ?>" maxlength="50"/>
-				<?=form_error('username', '<p class="error">', '</p>') ?>
 			</div>
 			<div class="form-group">
 				<input type="password" name="password" class="form-control" placeholder="Password" value="<?php echo set_value('password'); ?>" maxlength="50"/>

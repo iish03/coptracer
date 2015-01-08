@@ -120,7 +120,13 @@ class users extends CI_Controller
 					);
 					$this->session->set_userdata('logged_in', $sess_array);
 				}
-				redirect('home', 'refresh');
+				$session_data = $this->session->userdata('logged_in');
+
+				if( $session_data['is_admin'] == 'on' ){
+					redirect('account/dashboard', 'refresh');
+				}else{
+					redirect('home', 'refresh');
+				}
 			}else{
 				//IF USERNAME IS NOT FOUND THEN RETURN AN ERROR MESSAGE
 				return $this->load->view('pages/'.$page, $data);

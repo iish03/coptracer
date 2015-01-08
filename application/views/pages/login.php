@@ -5,14 +5,14 @@
 			<?=validation_errors('<p class="error">', '</p>') ?>
 			<?=$error_msg ?>
 			<div class="form-group">
-				<input type="text" name="username" class="form-control" placeholder="Student No" value="<?php echo set_value('username'); ?>" maxlength="50"/>
+				<input type="text" name="username" class="form-control" placeholder="Username" value="<?php echo set_value('username'); ?>" maxlength="50"/>
 			</div>
 			<div class="form-group">
 				<input type="password" name="password" class="form-control" placeholder="Password" value="<?php echo set_value('password'); ?>" maxlength="50"/>
 			</div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<input type="checkbox" name="remember_me"/> <?=$this->lang->line('lbl_remember_me')?>
-			</div>
+			</div> -->
 		</div>
 		<div class="footer">
 			<button type="submit" class="btn bg-olive btn-block"><?=$this->lang->line('lbl_sign_me_in')?></button>

@@ -18,10 +18,18 @@ class dashboard extends account
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('events_model');
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 	}
 
+	/**
+	 * GET ATTRIBUTE OF STATUS BOX
+	 * @param String, $box
+	 * @param Integer, $data
+	 * @return Array
+	 * --------------------------------------------
+	 */
 	public function get_stat_attribute($box,$data)
 	{
 		switch ($box) {
@@ -60,6 +68,11 @@ class dashboard extends account
 							);
 	}
 
+	/**
+	 * DISPLAY STATUS BOX
+	 * @return String, $stat_box
+	 * --------------------------------------------
+	 */
 	public function display_stat_box()
 	{
 		$details    = array();
@@ -67,12 +80,18 @@ class dashboard extends account
 		$status_box = new status_box;
 
 		//GET DESCRIPTION FOR STATUS BOX ATTRIBUTE
+		$no_of_ongoing = $this->events_model->get_no_of_member('ongoing');
+		$no_of_new     = $this->events_model->get_no_of_member('new');
 		$no_of_members = $users->get_no_of_user();
 
 		//STATUS BOX ATTRIBUTES
+		$ongoing_detail = $this->get_stat_attribute('ongoing_events', $no_of_ongoing);
+		$new_mem_detail = $this->get_stat_attribute('participant_req', $no_of_new);
 		$members_detail = $this->get_stat_attribute('members', $no_of_members);
 
 		//GET ALL DETAILS IN AN ARRAY
+		array_push($details, $ongoing_detail);
+		array_push($details, $new_mem_detail);
 		array_push($details, $members_detail);
 
 		//CREATE A STATUS BOX
@@ -81,6 +100,15 @@ class dashboard extends account
 		return $stat_box;
 	}
 
+	/**
+	 * DISPLAY DASHBOARD PAGE
+	 * @param String, $page
+	 * @param String, $header
+	 * @param String, $sidebar
+	 * @param String, $c_header
+	 * @return page
+	 * --------------------------------------------
+	 */
 	public function view($page, $header, $sidebar, $c_header)
 	{
 		$data['header']  = $header;
