@@ -73,30 +73,41 @@ class dashboard extends account
 	 * @return String, $stat_box
 	 * --------------------------------------------
 	 */
-	public function display_stat_box()
+	public function display_admin_stat_box()
 	{
 		$details    = array();
 		$users      = new users;
 		$status_box = new status_box;
 
 		//GET DESCRIPTION FOR STATUS BOX ATTRIBUTE
-		$no_of_ongoing = $this->events_model->get_no_of_member('ongoing');
+		$no_of_ongoing = $this->events_model->get_no_of_events('ongoing');
 		$no_of_new     = $this->events_model->get_no_of_member('new');
+		$no_of_unpaid  = $this->events_model->get_no_of_member('unpaid');
+		$no_of_partial = $this->events_model->get_no_of_member('partial');
+		$total_unpaid  = $no_of_unpaid + $no_of_partial;
 		$no_of_members = $users->get_no_of_user();
 
 		//STATUS BOX ATTRIBUTES
 		$ongoing_detail = $this->get_stat_attribute('ongoing_events', $no_of_ongoing);
 		$new_mem_detail = $this->get_stat_attribute('participant_req', $no_of_new);
+		$unpaid_detail  = $this->get_stat_attribute('unpaid_participant', $total_unpaid);
 		$members_detail = $this->get_stat_attribute('members', $no_of_members);
 
 		//GET ALL DETAILS IN AN ARRAY
 		array_push($details, $ongoing_detail);
 		array_push($details, $new_mem_detail);
+		array_push($details, $unpaid_detail);
 		array_push($details, $members_detail);
 
 		//CREATE A STATUS BOX
 		$stat_box = $status_box->view($details);
 
+		return $stat_box;
+	}
+
+	public function display_user_stat_box()
+	{
+		$stat_box = '';
 		return $stat_box;
 	}
 
@@ -111,10 +122,18 @@ class dashboard extends account
 	 */
 	public function view($page, $header, $sidebar, $c_header)
 	{
+		$session_data = $this->session->userdata('logged_in');
+
+		if( $session_data['is_admin'] == 'on' ){
+			$status_box = $this->display_admin_stat_box();
+		}else{
+			$status_box = $this->display_user_stat_box();
+		}
+
 		$data['header']  = $header;
 		$data['sidebar'] = $sidebar;
 		$data['content_header'] = $c_header;
-		$data['stat_box'] = $this->display_stat_box();
+		$data['stat_box'] = $status_box;
 		return $this->load->view('account/'.$page, $data);
 	}
 }

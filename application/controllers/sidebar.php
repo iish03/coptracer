@@ -36,8 +36,8 @@ class sidebar extends account
 				),
 			1 => array(
 				'admin'=>'on',
-				'title'=>'Events',
-				'link' =>'account/events',
+				'title'=>'Announcements',
+				'link' =>'account/announcements',
 				'class'=> array('class'=>''),
 				'icon' => array('class'=>'fa fa-th'),
 				'badge'=> array(
@@ -46,6 +46,24 @@ class sidebar extends account
 												'class'=>'badge pull-right bg-green'
 											)
 									),
+				'drop' => 'none'
+				),
+			2 => array(
+				'admin'=>'on',
+				'title'=>'Events',
+				'link' =>'account/events',
+				'class'=> array('class'=>''),
+				'icon' => array('class'=>'fa fa-th'),
+				'badge'=> 'none',
+				'drop' => 'none'
+				),
+			3 => array(
+				'admin'=>'on',
+				'title'=>'Manage Users',
+				'link' =>'account/manage_users',
+				'class'=> array('class'=>''),
+				'icon' => array('class'=>'fa fa-th'),
+				'badge'=> 'none',
 				'drop' => 'none'
 				)
 			);

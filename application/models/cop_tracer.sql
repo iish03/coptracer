@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2015 at 05:40 PM
+-- Generation Time: Jan 08, 2015 at 06:27 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `cop_events` (
   `owner_id` int(11) NOT NULL,
   `title` varchar(255) CHARACTER SET latin1 NOT NULL,
   `status` varchar(50) NOT NULL,
+  `max_participants` int(11) DEFAULT NULL,
   `category_id` int(11) NOT NULL,
   `amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `date_entered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

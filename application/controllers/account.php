@@ -14,7 +14,10 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 //INCLUDE CONTROLLERS
 include_once('common.php');
+include_once('announcements.php');
 include_once('dashboard.php');
+include_once('events.php');
+include_once('manage_users.php');
 include_once('sidebar.php');
 include_once('status_box.php');
 include_once('users.php');
@@ -211,6 +214,15 @@ class account extends CI_controller
 						);
 	}
 
+	public function announcements($page, $sidebar)
+	{
+		$announcements = new announcements;
+		$header  = $this->header();
+		$c_header= self::content_header(ucfirst($page));
+
+		return $announcements->view($page,$header,$sidebar, $c_header);
+	}
+
 	/**
 	 * DISPLAY INDEX VIEW PAGE
 	 * @return data
@@ -227,7 +239,20 @@ class account extends CI_controller
 
 	public function events($page, $sidebar)
 	{
+		$events  = new events;
+		$header  = $this->header();
+		$c_header= self::content_header(ucfirst($page));
 
+		return $events->view($page,$header,$sidebar, $c_header);
+	}
+
+	public function manage_users($page, $sidebar)
+	{
+		$manage_users  = new manage_users;
+		$header  = $this->header();
+		$c_header= self::content_header(ucfirst($page));
+
+		return $manage_users->view($page,$header,$sidebar, $c_header);
 	}
 
 	/**
@@ -260,9 +285,11 @@ class account extends CI_controller
 		$sidebar = $sidebar->view_sidebar();
 
 		switch ($page) {
-			case 'dashboard' : $this->dashboard($page, $sidebar);	break;
-			case 'events'    : $this->events($page, $sidebar);		break;
-			default: $this->dashboard($page, $sidebar); 					break;
+			case 'announcements' : $this->announcements($page, $sidebar);		break;
+			case 'dashboard'    : $this->dashboard($page, $sidebar);			break;
+			case 'events'       : $this->events($page, $sidebar);					break;
+			case 'manage_users' : $this->manage_users($page, $sidebar);		break;
+			default: $this->dashboard($page, $sidebar); 									break;
 		}
 
 		$common->display_footer();

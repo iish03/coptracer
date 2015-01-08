@@ -37,29 +37,27 @@ class Events_model extends CI_Model {
 	 * - new
 	 * - approved
 	 * - denied
-	 * @return Integer
-	 * --------------------------------------------
-	 */
-	public function get_no_of_member($status)
-	{
-		$this->db->where('status', $status);
-		$this->db->from('cop_events_member');
-		return $this->db->count_all_results();
-	}
-
-	/**
-	 * GET NO. OF MEMBER PER PAYMENT STATUS
 	 * - Paid
 	 * - Not full paid
 	 * - Unpaid
 	 * @return Integer
 	 * --------------------------------------------
 	 */
-	public function get_no_of_unpaid_member($status)
+	public function get_no_of_member($status)
 	{
-		$this->db->where('status', $status);
+		switch ($status) {
+			case 'new'     : $fieldname = 'status';					break;
+			case 'approved': $fieldname = 'status';					break;
+			case 'denied'  : $fieldname = 'status';					break;
+			case 'paid'    : $fieldname = 'payment_status';	break;
+			case 'partial' : $fieldname = 'payment_status';	break;
+			case 'unpaid'  : $fieldname = 'payment_status';	break;
+			default: return; break;
+		}
+		$this->db->where($fieldname, $status);
 		$this->db->from('cop_events_member');
 		return $this->db->count_all_results();
 	}
+
 }
 ?>
