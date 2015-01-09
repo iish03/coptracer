@@ -15,6 +15,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 //INCLUDE CONTROLLERS
 include_once('common.php');
 include_once('announcements.php');
+include_once('box.php');
 include_once('dashboard.php');
 include_once('events.php');
 include_once('manage_users.php');

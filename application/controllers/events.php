@@ -23,6 +23,21 @@ class events extends account
 		$this->load->library('form_validation');
 	}
 
+	public function create()
+	{
+		$form  = '';
+
+		$details = array(
+			'header'=>'Create an event',
+			'body'  =>$form,
+			'footer'=>''
+			);
+
+
+		$box = new box;
+		return $box->view_box('warning', $details);
+	}
+
 	/**
 	 * DISPLAY EVENTS PAGE
 	 * @param String, $page
@@ -35,11 +50,18 @@ class events extends account
 	public function view($page, $header, $sidebar, $c_header)
 	{
 		$session_data = $this->session->userdata('logged_in');
-		
 		$data['header']  = $header;
 		$data['sidebar'] = $sidebar;
 		$data['content_header'] = $c_header;
 
+		$parameter = str_replace('/', '', $this->uri->slash_segment(3, 'leading'));
+		if( $parameter !== '' ){
+			if( $parameter == 'create' ){
+				$data['contents'] = $this->create();
+			}
+		}
+
+		$data['contents'] = '';
 		return $this->load->view('account/'.$page, $data);
 	}
 }

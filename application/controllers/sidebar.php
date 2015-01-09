@@ -31,6 +31,7 @@ class sidebar extends account
 				'link' =>'account/dashboard',
 				'class'=> array('class'=>'active'),
 				'icon' => array('class'=>'fa fa-dashboard'),
+				'icon2'=> array('class'=>'fa fa-angle-left pull-right'),
 				'badge'=> 'none',
 				'drop' => 'none'
 				),
@@ -40,6 +41,7 @@ class sidebar extends account
 				'link' =>'account/announcements',
 				'class'=> array('class'=>''),
 				'icon' => array('class'=>'fa fa-th'),
+				'icon2'=> array('class'=>'fa fa-angle-left pull-right'),
 				'badge'=> array(
 										'text' => 'new',
 										'class'=> array(
@@ -52,10 +54,24 @@ class sidebar extends account
 				'admin'=>'on',
 				'title'=>'Events',
 				'link' =>'account/events',
-				'class'=> array('class'=>''),
-				'icon' => array('class'=>'fa fa-th'),
+				'class'=> array('class'=>'treeview'),
+				'icon' => array('class'=>'fa fa-bar-chart-o'),
+				'icon2'=> array('class'=>'fa fa-angle-left pull-right'),
 				'badge'=> 'none',
-				'drop' => 'none'
+				'drop' => array(
+									0 =>array(
+										'admin'=>'on',
+										'title'=>'Create event',
+										'link' =>'account/events/create',
+										'icon' =>array('class'=>'fa fa-angle-double-right'),
+										),
+									1 =>array(
+										'admin'=>'on',
+										'title'=>'View events',
+										'link' =>'account/events/',
+										'icon' =>array('class'=>'fa fa-angle-double-right'),
+										)
+									)
 				),
 			3 => array(
 				'admin'=>'on',
@@ -63,6 +79,7 @@ class sidebar extends account
 				'link' =>'account/manage_users',
 				'class'=> array('class'=>''),
 				'icon' => array('class'=>'fa fa-th'),
+				'icon2'=> array('class'=>'fa fa-angle-left pull-right'),
 				'badge'=> 'none',
 				'drop' => 'none'
 				)
@@ -141,6 +158,28 @@ class sidebar extends account
 		return $user_panel;
 	}
 
+	public function create_dropdown($details)
+	{
+		$li = '';
+		$session_data = $this->session->userdata('logged_in');
+
+		foreach ($details as $row) {
+			if( $session_data['is_admin'] !== $row['admin'] &&
+					$row['admin'] !== 'both'){
+				break;
+			}
+
+			$icon = common::create_icon($row['icon']);
+			$link = anchor($row['link'], $icon.$row['title']);
+
+			$li.= li($link);
+		}
+
+		$ul = create_tag('ul', $li, array('class'=>'treeview-menu'));
+
+		return $ul;
+	}
+
 	/**
 	 * CREATES SIDEBAR NAVIGATION
 	 * @return String, <ul>
@@ -151,6 +190,7 @@ class sidebar extends account
 		$li = '';
 		$session_data = $this->session->userdata('logged_in');
 
+		$this->links = '';
 		$this->get_links();
 
 		foreach ($this->links as $content) {
@@ -158,13 +198,25 @@ class sidebar extends account
 					$content['admin'] !== 'both'){
 				break;
 			}
-			$badge = $this->create_badge($content['badge']);
-			$icon  = common::create_icon($content['icon']);
-			$title = $this->create_title($content['title']);
 
-			$link  = $this->create_link(
-								$icon, $title, $content['link'], $badge
-							);
+			if( is_array($content['drop']) ){
+				$badge = $this->create_badge($content['badge']);
+				$icon  = common::create_icon($content['icon']);
+				$title = $this->create_title($content['title']);
+				$drop_icon = common::create_icon($content['icon2']);
+				$link  = $this->create_link(
+									$icon, $title.$drop_icon, $content['link'], $badge
+								);
+				$link .= $this->create_dropdown($content['drop']);
+			}else{
+				$badge = $this->create_badge($content['badge']);
+				$icon  = common::create_icon($content['icon']);
+				$title = $this->create_title($content['title']);
+				$link  = $this->create_link(
+									$icon, $title, $content['link'], $badge
+								);
+			}
+
 
 			$li.= li($link, $content['class']);
 		}

@@ -12,7 +12,7 @@
 		<?=$content_header ?>
 		<!-- Main content -->
 		<section class="content">
-
+			<?=$contents ?>
 		</section>
 	</aside>
 </div>
