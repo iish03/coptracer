@@ -40,7 +40,9 @@ class manage_users extends account
 		$data['sidebar'] = $sidebar;
 		$data['content_header'] = $c_header;
 
-		return $this->load->view('account/'.$page, $data);
+		$this->load->view('templates/accounts/header', $data);
+		$this->load->view('account/'.$page, $data);
+		$this->load->view('templates/accounts/footer');
 	}
 }
 ?>

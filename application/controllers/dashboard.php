@@ -36,27 +36,32 @@ class dashboard extends account
 			case 'ongoing_events' :
 						$color       = 'aqua';
 						$description = 'Ongoing Events';
-						$icon        = 'alarm_outline';
+						$icon        = 'android_calendar';
+						$link        = 'account/events/view/ongoing';
 						break;
 			case 'participant_req':
 						$color       = 'green';
 						$description = 'New Participants';
 						$icon        = 'person_add';
+						$link        = '';
 						break;
 			case 'unpaid_participant':
 						$color       = 'yellow';
 						$description = 'Unpaid Participants';
 						$icon        = 'pricetag_outline';
+						$link        = '';
 						break;
 			case 'members':
 						$color       = 'red';
 						$description = 'Members';
-						$icon        = 'person_add';
+						$icon        = 'people';
+						$link        = 'account/manage_users';
 						break;
 			default:
 						$color       = 'aqua';
 						$description = '';
 						$icon        = '';
+						$link        = '';
 						break;
 		}
 
@@ -64,7 +69,8 @@ class dashboard extends account
 							'color'=>$color,
 							'data'=>$data,
 							'description'=>$description,
-							'icon'=>$icon
+							'icon'=>$icon,
+							'link'=>$link
 							);
 	}
 
@@ -134,7 +140,10 @@ class dashboard extends account
 		$data['sidebar'] = $sidebar;
 		$data['content_header'] = $c_header;
 		$data['stat_box'] = $status_box;
-		return $this->load->view('account/'.$page, $data);
+		
+		$this->load->view('templates/accounts/header', $data);
+		$this->load->view('account/'.$page, $data);
+		$this->load->view('templates/accounts/footer');
 	}
 }
 ?>

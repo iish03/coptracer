@@ -20,22 +20,22 @@ class events extends account
 		parent::__construct();
 		$this->load->model('events_model');
 		$this->load->helper(array('form', 'url'));
+		$this->load->helper('file');
 		$this->load->library('form_validation');
 	}
 
-	public function create()
+
+	public function create($page, $header, $sidebar, $c_header)
 	{
-		$form  = '';
+		$session_data = $this->session->userdata('logged_in');
+		$data['header']  = $header;
+		$data['sidebar'] = $sidebar;
+		$data['content_header'] = $c_header;
+		$data['events_category'] = $this->events_model->get_categories();
 
-		$details = array(
-			'header'=>'Create an event',
-			'body'  =>$form,
-			'footer'=>''
-			);
-
-
-		$box = new box;
-		return $box->view_box('warning', $details);
+		$this->load->view('templates/accounts/header', $data);
+		$this->load->view('templates/forms/create_event_form', $data);
+		$this->load->view('templates/accounts/footer', $data);
 	}
 
 	/**
@@ -54,15 +54,17 @@ class events extends account
 		$data['sidebar'] = $sidebar;
 		$data['content_header'] = $c_header;
 
-		$parameter = str_replace('/', '', $this->uri->slash_segment(3, 'leading'));
-		if( $parameter !== '' ){
-			if( $parameter == 'create' ){
-				$data['contents'] = $this->create();
-			}
-		}
+		$parameter = $this->uri->slash_segment(3, 'leading');
 
-		$data['contents'] = '';
-		return $this->load->view('account/'.$page, $data);
+		
+		if( $parameter  == '/create'){
+			$this->create($page, $header, $sidebar, $c_header);
+		}else{
+			$this->load->view('templates/accounts/header', $data);
+			$this->load->view('account/'.$page, $data);
+			$this->load->view('templates/accounts/footer');
+		}
+		
 	}
 }
 ?>

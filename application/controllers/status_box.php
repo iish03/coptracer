@@ -57,12 +57,13 @@ class status_box extends CI_controller
 		$avaialable_icons = array(
 			'bag'              => array('class'=>'ion ion-bag'),
 			'stats_bars'       => array('class'=>'ion ion-stats-bars'),
-			'person_bag'       => array('class'=>'ion ion-person-add'),
+			'person_add'       => array('class'=>'ion ion-android-person-add'),
 			'pie_graph'        => array('class'=>'ion ion-pie-graph'),
 			'cart_outline'     => array('class'=>'ion ion-ios7-cart-outline'),
 			'briefcase_outline'=> array('class'=>'ion ion-ios7-briefcase-outline'),
-			'alarm_outline'    => array('class'=>'ion ion-ios7-alarm-outline'),
-			'pricetag_outline' => array('class'=>'ion ion-ios7-pricetag-outline'),
+			'android_calendar' => array('class'=>'ion ion-android-calendar'),
+			'pricetag_outline' => array('class'=>'ion ion-ios-pricetag-outline'),
+			'people'           => array('class'=>'ion ion-android-people'),
 			);
 
 		if( array_key_exists($icon,$avaialable_icons) ){
@@ -104,7 +105,7 @@ class status_box extends CI_controller
 	 * @return String, <a>
 	 * --------------------------------------------
 	 */
-	public function get_stat_footer()
+	public function get_stat_footer($link)
 	{
 		$attribute = array(
 			'icon'   => array('class'=>'fa fa-arrow-circle-right'),
@@ -113,7 +114,7 @@ class status_box extends CI_controller
 
 		$icon = common::create_icon($attribute['icon']);
 
-		return anchor('', 'More info '.$icon, $attribute['footer']);
+		return anchor($link, 'More info '.$icon, $attribute['footer']);
 	}
 
 	/**
@@ -134,7 +135,7 @@ class status_box extends CI_controller
 
 			$box = $this->get_inner($info);
 			$box.= $this->get_icon($icon_attr);
-			$box.= $this->get_stat_footer();
+			$box.= $this->get_stat_footer($info['link']);
 			$box = div($box, $box_color);
 			$box = div($box, $attribute);
 			$this->small_status_box .= $box;

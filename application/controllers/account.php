@@ -207,6 +207,7 @@ class account extends CI_controller
 	 */
 	static function content_header($page = '')
 	{
+		$page = str_replace('_', ' ', $page);
 		$title        = heading($page.create_tag('small','Control panel'), '1');
 		$bread_crumbs = self::bread_crumbs($page);
 
@@ -286,10 +287,10 @@ class account extends CI_controller
 		$sidebar = $sidebar->view_sidebar();
 
 		switch ($page) {
-			case 'announcements' : $this->announcements($page, $sidebar);		break;
-			case 'dashboard'    : $this->dashboard($page, $sidebar);			break;
-			case 'events'       : $this->events($page, $sidebar);					break;
-			case 'manage_users' : $this->manage_users($page, $sidebar);		break;
+			case 'announcements' : $this->announcements($page, $sidebar);	break;
+			case 'dashboard'     : $this->dashboard($page, $sidebar);			break;
+			case 'events'        : $this->events($page, $sidebar);				break;
+			case 'manage_users'  : $this->manage_users($page, $sidebar);	break;
 			default: $this->dashboard($page, $sidebar); 									break;
 		}
 

@@ -59,5 +59,10 @@ class Events_model extends CI_Model {
 		return $this->db->count_all_results();
 	}
 
+	public function get_categories()
+	{
+		$query = $this->db->get('cop_category');
+		return $query->result_array();
+	}
 }
 ?>
